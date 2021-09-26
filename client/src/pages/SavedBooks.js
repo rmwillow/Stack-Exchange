@@ -1,23 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Jumbotron, Container, CardColumns, Card, Button } from 'react-bootstrap';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 
-import { getMe, deleteBook } from '../utils/API';
-import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
-
 import { REMOVE_BOOK } from '../utils/mutations';
 import { GET_ME } from '../utils/queries';
 
 const SavedBooks = () => {
-
   // use GraphQL query for user data, mutation to remove a book
   const [setUserData] = useState({});
   const { loading, data } = useQuery(GET_ME);
   const [removeBook] = useMutation(REMOVE_BOOK);
-
-
-  // create function that accepts the book's mongo _id value as param and deletes the book from the database
+  // onclick handler for delete button
   const handleDeleteBook = async (bookId) => {
     try {
       // remove the book from the savedBooks subdocument
@@ -48,7 +42,7 @@ const SavedBooks = () => {
         </Container>
       </Jumbotron>
       <Container>
-      <div>
+        <div>
           <h2>
             {data.me.savedBooks.length
               ? `Viewing ${data.me.savedBooks.length} saved ${data.me.savedBooks.length === 1 ? 'book' : 'books'}:`

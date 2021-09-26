@@ -1,32 +1,29 @@
 {
   "name": "stack-exchange",
   "version": "1.0.0",
-  "description": "",
+  "description": "A MERN app to search the Google Books API",
   "main": "server/server.js",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
     "start:prod": "cd server && npm start",
     "start:dev": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
-    "install": "cd server && npm i && cd ../client && npm i"
+    "install": "cd server && npm i && cd ../client && npm i",
+    "heroku-postbuild": "cd client && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rmwillow/Stack-Exchange"
   },
   "keywords": [],
+  "issues": "https://github.com/rmwillow/Stack-Exchange/issues",
+  "homepage": "https://github.com/rmwillow/Stack-Exchange",
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "concurrently": "^5.1.0"
-  },
   "dependencies": {
-    "@apollo/react-hooks": "^4.0.0",
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^12.1.0",
-    "@testing-library/user-event": "^13.2.1",
-    "apollo-boost": "^0.4.9",
-    "apollo-server-express": "^3.3.0",
-    "bootstrap": "^5.1.1",
-    "express": "^4.17.1",
-    "express-graphql": "^0.12.0",
-    "graphql": "^15.6.0",
-    "jwt-decode": "^3.1.2",
-    "react": "^17.0.2"
+    "graphql": "^15.3.0",
+    "if-env": "^1.0.4"
+  },
+  "devDependencies": {
+    "concurrently": "^5.2.0"
   }
 }

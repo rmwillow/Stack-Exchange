@@ -9,11 +9,7 @@ import Auth from '../utils/auth';
 const SignupForm = () => {
   // set states
   const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
-
-  // set state for form validation
   const [validated] = useState(false);
-
-  // set state for alert
   const [showAlert, setShowAlert] = useState(false);
 
   // use GraphQL mutation to add user
@@ -44,7 +40,6 @@ const SignupForm = () => {
 
       // login if successful
       Auth.login(data.addUser.token);
-
     } catch (err) {
       console.error(err);
       setShowAlert(true);
