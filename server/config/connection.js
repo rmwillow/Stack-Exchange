@@ -8,3 +8,4 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/stack-exchange'
 });
 
 module.exports = mongoose.connection;
+
