@@ -2,19 +2,27 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 
-import { loginUser } from '../utils/API';
 import Auth from '../utils/auth';
 
+import { useMutation } from '@apollo/react-hooks';
+import { LOGIN_USER } from '../utils/mutations';
+
 const LoginForm = () => {
+  // set states
   const [userFormData, setUserFormData] = useState({ email: '', password: '' });
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
 
+  // use GraphQL login mutationo
+  const [login] = useMutation(LOGIN_USER);
+
+  // on change handler
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setUserFormData({ ...userFormData, [name]: value });
   };
 
+  // on submit handler
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -26,20 +34,18 @@ const LoginForm = () => {
     }
 
     try {
-      const response = await loginUser(userFormData);
-
-      if (!response.ok) {
-        throw new Error('something went wrong!');
-      }
-
-      const { token, user } = await response.json();
-      console.log(user);
-      Auth.login(token);
-    } catch (err) {
-      console.error(err);
-      setShowAlert(true);
+      // run login mutation
+      const { data } = await login({
+        variables: { ...userFormData }
+      });
+    
+      // login
+      Auth.login(data.login.token);
+    } catch (e) {
+      console.error(e);
     }
 
+    // reset the form state
     setUserFormData({
       username: '',
       email: '',
